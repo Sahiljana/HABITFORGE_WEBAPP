@@ -1,6 +1,8 @@
+const BASE_URL = import.meta.env.VITE_API_URL || '';
+
 export async function getProfileApi() {
   const token = await getToken();
-  const res = await fetch('http://localhost:4000/api/profile', {
+  const res = await fetch(`${BASE_URL}/api/profile`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) throw new Error('Failed to fetch profile');
@@ -20,8 +22,8 @@ import { Habit } from '@/hooks/useHabitData';
 import { getIdToken } from 'firebase/auth';
 import { auth } from '@/config/firebase';
 
-// Use a hardcoded API URL for frontend (Vite/React does not expose process.env by default)
-const API_URL = 'http://localhost:4000/api/habits';
+// Use environment variable for API URL
+const API_URL = `${BASE_URL}/api/habits`;
 
 async function getToken() {
   const user = auth.currentUser;
